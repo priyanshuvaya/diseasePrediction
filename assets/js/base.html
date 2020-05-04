@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+        <Title>
+            Upchaar : Healthcare Appointment System
+        </Title>
+        <!--Materialize Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Materialize CSS-->
+        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}" media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="screen,projection"/>
+        <!--Full Calender Style-->
+        <link type="text/css" rel='stylesheet' href="{% static 'fullcalendar/fullcalendar.css' %}" />
+        <!--Full Calender Scripts-->
+        <script type="text/javascript" src="{% static 'fullcalendar/lib/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'fullcalendar/lib/moment.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'fullcalendar/fullcalendar.js' %}"></script>
+        {% block custom_style %}
+        {% endblock %}
+
+    </head>
+
+    <body>
+
+        <header>
+            <!--Fixed Navbar-->
+            <div class="navbar-fixed">
+                <nav class="teal top-nav">
+                    <div class="nav-wrapper container">
+                        <a href="{% url 'index' %}" class="brand-logo white-text">UPCHAAR</a>
+                        <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                            <i class="material-icons white-text">menu</i>
+                        </a>
+                        {% if user.is_authenticated %}
+                            <ul class="right">
+                                <li class="notification-container">
+                                    <a href="#" data-target="notification-sidenav" class="sidenav-trigger show-on-large"
+                                        style="margin:0px;">
+                                        <i class="material-icons left white-text">notifications</i>
+                                        <span class="notification-counter" id="notification-count" hidden>2</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        <ul class="right hide-on-med-and-down">
+                            {% if user.is_authenticated %}
+                                <li style="padding-right:10px;">Signed in as
+                                    <span class="white-text"> {{ user }} </span>
+                                </li>
+                                <li><a href="{% url 'dashboard' %}" class="white-text">Dashboard</a></li>
+                                <li><a href="#" class="dropdown-trigger white-text" data-target='account-menu'>
+                                        <i class="material-icons right">account_circle</i>Account
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li style="padding-right:10px;">Welcome Guest</li>
+                                <li><a href="{% url 'login' %}" class="white-text">Login</a></li>
+                                <li><a href="{% url 'signup' %}" class="white-text">Signup</a></li>
+                            {% endif %}
+                        </ul>
+
+                        <!--Account Menu List-->
+                        <ul id='account-menu' class='dropdown-content'>
+                            {% if user.is_authenticated %}
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Settings</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else %}
+                                <li>Welcome </li>
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <!--Mobile Collabsible SideNav-->
+            <ul class="sidenav" id="mobile-nav">
+                <li><div class="divider"></div></li>
+            </ul>
+            <!--Notification Collabsible Sidenav-->
+            {% if user.is_authenticated %}
+                <ul class="sidenav" id="notification-sidenav" style="padding:20px;">
+                    <li onclick="closeNotificationSidenav()"><i class="material-icons right">close</i></li>
+                    <li><a href="{% url 'notifications' %}"><h6 align="center">Notifications</h6></a></li>
+                    <li class="divider"></li>
+                    <br>
+                    {% block notifications %}
+                    {% endblock %}
+                </ul>
+            {% endif %}
+
+            {% block custom_header %}
+            {% endblock %}
+
+        </header>
+
+        <main>
+            <!--Alert Messages-->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">
+                        <span class="closebtn">&times;</span>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block main %}
+            {% endblock %}
+        </main>
+
+        <!--Sticky Footer-->
+        <footer class="page-footer teal">
+            <div class="footer-copyright">
+                <div class="container">
+                    ©2018 Upchaar &nbsp; &nbsp;
+                    <a class="amber-text" href="https://github.com/apaar97/UpchaarWeb">Github</a>
+                </div>
+            </div>
+        </footer>
+
+        <!--Scripts-->
+        <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+        <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/init.js' %}"></script>
+        {% block custom_script %}
+        {% endblock %}
+
+    </body>
+
+</html>

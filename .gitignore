@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+./disease/migrations/
+./disease/__pycache__/
+./Prediction/__pycache__/
+

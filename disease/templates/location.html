@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+
+
+{% block body %}
+
+    <div class="fluid-container row">
+        <div class="col-12 col-sm-12 col-md-3">
+          <div class="col-12 col-sm-12">
+            <form name="frm_map" id="frm_map">
+                <h4>Book an Appointment</h4>
+                <table>
+                    <tr>
+                        <th>Address</th>
+                        <td>
+                            <div class="row">
+                                <div class="col-6 col-sm-10">
+                                    <input type="text" name="address" id="address">
+                                </div>
+                                <div class="col-6 col-sm-12">
+                                    <i class="fa fa-map-marker" onclick="getLocation()"></i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Radius</th>
+                        <td>
+                            <input type="text" name="radius" id="radius" value="5" placeholder="In KM">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Types</th>
+                        <td>
+                          <select class="mdb-select md-form drop">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="1">Doctor</option>
+                            <option value="2">Hospital</option>
+                            <option value="3">Medical Shop</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="" value="Show" id="submit"
+                                   onclick="renderMap();">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+          </div>
+
+            <hr>
+            <div class="col-12 col-sm-12">
+              <h4>Possible Disease Diagnosed</h4>
+              {% for disease in disease_list %}
+                <p>{{disease }}</p>
+              {% endfor %}
+            </div>
+
+        </div>
+        <div class="col-12 col-sm-12 col-md-8">
+            <div id="map" style="height:80vh;"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block custom_script %}
+
+    <script type="text/javascript" src="{% static 'js/geomaps.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ijg51pvdTi_GYLsCzrBle1dI6OdeN7Q&libraries=places&callback=initialize"
+            async defer></script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+    {% block body %}
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-md-4 h-md-100">
+          <div class="text-white align-top p-5 mt-5">
+                <img src="{% static 'images/doctor_png.png' %}" class="img-fluid img-circle img-responsive img-class" alt="">
+          </div>
+        </div>
+
+
+        <div class="col-12 col-md-8 bg-white h-md-100">
+          {% block form_body %}
+          <div class="d-flex justify-content-center d-flex align-items-center mg-block">
+            <button type="button" name="login" class="btn btn-primary btn-block btn-lg text-white"><a href="{% url 'login' %}" class="text-white">Login</a></button>
+          </div>
+
+          <div class="d-flex justify-content-center text-center mt-3 d-flex align-items-center">
+            <button type="button" name="signup" class="btn btn-primary btn-block btn-lg rounded"><a href="{% url 'signup' %}" class="text-white">Sign Up</a></button>
+          </div>
+          {% endblock form_body %}
+        </div>
+
+      </div>
+    </div>
+
+    {% endblock body %}
